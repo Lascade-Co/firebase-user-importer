@@ -3,7 +3,7 @@ const fs = require('fs');
 const csvWriter = require('csv-writer').createObjectCsvWriter;
 
 //firebase admin configure
-const serviceAccount = require('./rent80_serviceAccountKey.json');
+const serviceAccount = require('./serviceAccountKey.json');
 const outputfile = 'imported_users.csv';
 
 const { createObjectCsvWriter } = require('csv-writer');
