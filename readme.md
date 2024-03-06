@@ -14,8 +14,14 @@ Before running this script, make sure you have completed the following steps:
 To install the necessary dependencies, follow these steps:
 
 1. If you don't have npm installed, you can install it by running the following command in your terminal:
+
    ```shell
    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   ```
+
+2. Next install Node.js by running the following command in your terminal:
+
+   ```shell
    brew install node
    ```
 
