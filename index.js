@@ -3,7 +3,9 @@ const fs = require('fs');
 const csvWriter = require('csv-writer').createObjectCsvWriter;
 
 //firebase admin configure
-const serviceAccount = require('./rent80_serviceAccountKey.json');
+const serviceAccount = require('./rent80_serviceAccountKy.json');
+const outputfile = 'imported_users.csv';
+
 const { createObjectCsvWriter } = require('csv-writer');
 const readline = require('readline');
 
@@ -27,6 +29,20 @@ const listAllUsers = async (nextPageToken) => {
             loginType = 'Apple';
           } else if (provider === 'facebook.com') {
             loginType = 'Facebook';
+          } else if (provider === 'password') {
+            loginType = 'Email/Password';
+          } else if (provider === 'phone') {
+            loginType = 'Phone';
+          } else if (provider === 'twitter.com') {
+            loginType = 'Twitter';
+          } else if (provider === 'github.com') {
+            loginType = 'Github';
+          } else if (provider === 'microsoft.com') {
+            loginType = 'Microsoft';
+          } else if (provider === 'yahoo.com') {
+            loginType = 'Yahoo';
+          } else if (provider === 'linkedin.com') {
+            loginType = 'LinkedIn';
           }
         }
         return {
@@ -42,7 +58,7 @@ const listAllUsers = async (nextPageToken) => {
       const filteredUsers = users.filter(user => user.email);
  
       const csvWriter = createObjectCsvWriter({
-        path: 'imported_users.csv',
+        path: outputfile,
         header: [
           { id: 'uid', title: 'UID' },
           { id: 'email', title: 'Email' },
@@ -72,16 +88,15 @@ const listAllUsers = async (nextPageToken) => {
         // List next batch of users.
         await listAllUsers(listUsersResult.pageToken);
       }
-      await csvWriter.writeRecords(filteredUsers);
-
-      if (listUsersResult.pageToken) {
-        // List next batch of users.
-        await listAllUsers(listUsersResult.pageToken);
-      }
     } catch (error) {
       console.log('Error listing users:', error);
     }
 };
+
+//Delete outputfile if exists
+if (fs.existsSync(outputfile)) {
+  fs.unlinkSync(outputfile);
+}
 
 // Start listing users from the beginning, 1000 at a time.
 listAllUsers();
