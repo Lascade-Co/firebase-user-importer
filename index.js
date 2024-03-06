@@ -5,6 +5,9 @@ const csvWriter = require('csv-writer').createObjectCsvWriter;
 //firebase admin configure
 const serviceAccount = require('./rent80_serviceAccountKey.json');
 const { createObjectCsvWriter } = require('csv-writer');
+const readline = require('readline');
+
+let importedCount = 0;
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
@@ -37,6 +40,7 @@ const listAllUsers = async (nextPageToken) => {
       });
 
       const filteredUsers = users.filter(user => user.email);
+ 
       const csvWriter = createObjectCsvWriter({
         path: 'imported_users.csv',
         header: [
@@ -50,6 +54,24 @@ const listAllUsers = async (nextPageToken) => {
         append: true, // Append records to the existing file
       });
 
+      for (const user of filteredUsers) {
+        await csvWriter.writeRecords([user]);
+        importedCount++;
+        const spinner = ['|', '/', '-', '\\'];
+        let spinnerIndex = 0;
+
+        const animateActivity = () => {
+          process.stdout.write(` Imported ${importedCount} email users ${spinner[spinnerIndex]}\r`);
+          spinnerIndex = (spinnerIndex + 1) % spinner.length;
+        };
+
+        setInterval(animateActivity, 100);
+      }
+
+      if (listUsersResult.pageToken) {
+        // List next batch of users.
+        await listAllUsers(listUsersResult.pageToken);
+      }
       await csvWriter.writeRecords(filteredUsers);
 
       if (listUsersResult.pageToken) {
