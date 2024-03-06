@@ -10,13 +10,11 @@ Before running this script, make sure you have completed the following steps:
 2. Save the service account key JSON file to a secure location in your project directory.
 
 ## Installation
-
-1. Clone this repository to your local machine.
-2. Install the required dependencies by running the following command:
+Clone this repository to your local machine and install the required dependencies by running the following command:
 
    ```shell
    npm install
-    ```
+   ```
 
 ## Configuration
 Assign variable serviceAccount with the service account key JSON file path in the index.js file.
@@ -26,12 +24,11 @@ Assign variable serviceAccount with the service account key JSON file path in th
    ```
 
 ## Run the script
-
 To run the script, use the following command:
 
-    ```shell
-    npm start
-    ```
+   ```shell
+   npm start
+   ```
 
 ## Result
 The script will import the user Authentication data from Firebase to the imported_users.csv file in the root directory of the project.
