@@ -38,7 +38,7 @@ const listAllUsers = async (nextPageToken) => {
 
       const filteredUsers = users.filter(user => user.email);
       const csvWriter = createObjectCsvWriter({
-        path: 'users.csv',
+        path: 'imported_users.csv',
         header: [
           { id: 'uid', title: 'UID' },
           { id: 'email', title: 'Email' },
