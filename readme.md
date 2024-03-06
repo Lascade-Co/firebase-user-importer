@@ -47,4 +47,4 @@ To run the script, use the following command:
    ```
 
 ## Result
-The script will import the user Authentication data from Firebase to the imported_users.csv file in the root directory of the project.
+The script will import the user Authentication data from Firebase to the `outputfile` variable value in the root directory of the project.
